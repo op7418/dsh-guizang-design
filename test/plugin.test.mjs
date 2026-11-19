@@ -18,7 +18,7 @@ const provider = createSkillProvider([join(ROOT, 'skills'), join(ROOT, 'own-skil
 
 test('四个 skill 和语气档案都注册了，名字合法', async () => {
   const names = (await provider.list({})).map((c) => c.name).sort()
-  assert.deepEqual(names, ['guizang-page-skill', 'guizang-ppt-skill', 'guizang-social-card-skill', 'guizang-voice', 'humanizer-zh'])
+  assert.deepEqual(names, ['guizang-page-skill', 'guizang-ppt-skill', 'guizang-social-card-skill', 'guizang-voice', 'humanizer', 'humanizer-zh'])
   for (const c of await provider.list({})) {
     assert.match(c.name, /^[a-z0-9]+(-[a-z0-9]+)*$/)
     assert.ok(c.description.length > 20)
@@ -181,7 +181,9 @@ test('英文客户端：skill、工作流、草稿都是英文，/skill 开头�
   assert.ok(!CJK.test(nextOfWork(w, 'en')))
   assert.ok(!CJK.test(nextIssue('Weekly', w, 'en')))
   assert.ok(CJK.test(nextOfWork(w)), '默认还是中文')
-  assert.deepEqual(skillsFor('zh').map((s) => s.title), SKILLS.map((s) => s.title))
+  // 去 AI 味按界面语言换一份：中文界面给 humanizer-zh，英文界面给 humanizer
+  assert.deepEqual(skillsFor('zh').map((s) => s.name), ['guizang-ppt-skill', 'guizang-social-card-skill', 'guizang-page-skill', 'humanizer-zh'])
+  assert.deepEqual(skillsFor('en').map((s) => s.name), ['guizang-ppt-skill', 'guizang-social-card-skill', 'guizang-page-skill', 'humanizer'])
 })
 
 test('页面文案：中英两份的 key 一样，占位符一致，英文里没有中文', () => {

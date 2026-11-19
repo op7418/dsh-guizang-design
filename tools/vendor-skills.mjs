@@ -21,6 +21,8 @@ export const SOURCES = [
   { key: 'card', name: 'guizang-social-card-skill', repo: 'https://github.com/op7418/guizang-social-card-skill.git' },
   { key: 'page', name: 'guizang-page-skill', repo: 'https://github.com/op7418/guizang-pages-skill.git' },
   { key: 'humanizer', name: 'humanizer-zh', repo: 'https://github.com/op7418/Humanizer-zh.git' },
+  // 英文文本的另一份：blader/humanizer（MIT）。仓库里还带别的 agent 的插件清单和校验脚本，运行时用不到
+  { key: 'humanizer-en', name: 'humanizer', repo: 'https://github.com/blader/humanizer.git', skip: [/^scripts\//, /^\.claude-plugin\//, /^\.cursor-plugin\//] },
 ]
 
 // 运行时用不到的文件：说明文档、开发记录、测试、给其他 agent 的配置、锁文件
@@ -50,7 +52,8 @@ for (const s of SOURCES) {
   const commit = git(src, 'rev-parse', 'HEAD')
   const dirty = git(src, 'status', '--porcelain', '--untracked-files=no')
   if (dirty) console.warn(`! ${s.name}：本地仓库有未提交的修改，复制的是工作区内容，但 manifest 记的是 HEAD ${commit.slice(0, 7)}`)
-  const files = git(src, 'ls-files').split('\n').filter((f) => f && !SKIP.some((re) => re.test(f)))
+  const skip = [...SKIP, ...(s.skip || [])]
+  const files = git(src, 'ls-files').split('\n').filter((f) => f && !skip.some((re) => re.test(f)))
   const dest = join(OUT, s.name)
   for (const f of files) {
     mkdirSync(dirname(join(dest, f)), { recursive: true })

@@ -2,7 +2,7 @@
 
 [中文](README.md) | English
 
-A [DeepSeek Harness](https://www.npmjs.com/package/@deepseek-ai/dsh) (dsh) plugin that installs Guizang's content skills — web slide decks, social cards, typeset web pages and Chinese de-AI editing — plus a writing-voice profile. The first three share one design system, so a deck, a card set and a web page made from the same content use the same themes, fonts and layout language.
+A [DeepSeek Harness](https://www.npmjs.com/package/@deepseek-ai/dsh) (dsh) plugin that installs Guizang's content skills — web slide decks, social cards, typeset web pages and de-AI editing in Chinese and English — plus a writing-voice profile. The first three share one design system, so a deck, a card set and a web page made from the same content use the same themes, fonts and layout language.
 
 It also adds a **Guizang Design** page to the sidebar: start a skill, browse what you have made, make another one in the same style, or run a multi-skill workflow.
 
@@ -12,7 +12,7 @@ It also adds a **Guizang Design** page to the sidebar: start a skill, browse wha
 
 ## What you get
 
-### Five skills
+### Six skills
 
 | Skill | Command | What it does | Output |
 |---|---|---|---|
@@ -20,7 +20,10 @@ It also adds a **Guizang Design** page to the sidebar: start a skill, browse wha
 | Social cards | `/guizang-social-card-skill` | Xiaohongshu 3:4 sets, WeChat 21:9 headers and 1:1 share cards; one command renders and size-checks the PNGs | PNG |
 | Web page typesetting | `/guizang-page-skill` | Turns an article or notes into a typeset single page (faithful or explain mode); exports PDF and long images | HTML / PDF / PNG |
 | De-AI editing | `/humanizer-zh` | Removes filler, repetition and template phrasing from Chinese text while keeping facts, certainty and the author's voice | Edited text |
+| De-AI editing (English) | `/humanizer` | Rewrites AI-sounding English prose — staged openers, forced triads, dashes everywhere, inflated claims — while keeping every fact | Edited text |
 | Voice profile | `/guizang-voice` | Learns your writing habits from messages you sent in DeepSeek and from your own articles; stores them in a local profile | A Markdown profile |
+
+De-AI editing comes in two skills: `/humanizer-zh` for Chinese, `/humanizer` for English. The gallery tiles follow the client language, so a Chinese page shows 去 AI 味 and an English page shows De-AI editing, four tiles either way.
 
 Type `/` in the composer to see them, or just describe the task and the model picks the skill.
 
@@ -146,7 +149,8 @@ Each skill has its own repo and also works in Claude Code, Codex and other agent
 [guizang-ppt-skill](https://github.com/op7418/guizang-ppt-skill) ·
 [guizang-social-card-skill](https://github.com/op7418/guizang-social-card-skill) ·
 [guizang-pages-skill](https://github.com/op7418/guizang-pages-skill) ·
-[Humanizer-zh](https://github.com/op7418/Humanizer-zh)
+[Humanizer-zh](https://github.com/op7418/Humanizer-zh) (Chinese) ·
+[humanizer](https://github.com/blader/humanizer) (English)
 
 `skills/` holds snapshots of those repos at pinned commits ([`skills/manifest.json`](skills/manifest.json)); the plugin page shows the versions in its lower-left corner. When a skill loads, the plugin makes two changes: it drops steps that only apply to a git clone (the update check at the start of the PPT skill; bundled skills update with the plugin), and appends a few notes for this environment (dependencies are installed, register deliverables, read the voice profile before writing). A same-named skill in `~/.dsh/skills` or a project's `.dsh/skills` takes precedence over the bundled one.
 
@@ -164,4 +168,4 @@ dsh plugin --profile web add link:$PWD
 
 ## License
 
-[AGPL-3.0](LICENSE). Bundled skills keep their own licenses (humanizer-zh is MIT).
+[AGPL-3.0](LICENSE). Bundled skills keep their own licenses (humanizer-zh and humanizer are MIT).

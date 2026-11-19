@@ -12,7 +12,7 @@
 
 ## 装上以后有什么
 
-### 五个 skill
+### 六个 skill
 
 | skill | 命令 | 做什么 | 产出 |
 |---|---|---|---|
@@ -20,7 +20,10 @@
 | 图文卡片 | `/guizang-social-card-skill` | 小红书 3:4 组图、公众号 21:9 头图和 1:1 分享卡，一条命令出图并核对尺寸 | PNG |
 | 网页排版 | `/guizang-page-skill` | 把文章、笔记排成精排单页网页，忠实模式或解释模式；可导出 PDF 和长图 | HTML / PDF / 长图 |
 | 去 AI 味 | `/humanizer-zh` | 删掉中文里的空话、重复和模板化表达，保留事实、确定程度和作者自己的语气 | 改好的文字 |
+| 去 AI 味（英文） | `/humanizer` | 英文里的 AI 味：摆架子的开头、强行三连、满篇破折号、虚张声势的说法，事实一条不少 | 改好的文字 |
 | 语气档案 | `/guizang-voice` | 从你在 DeepSeek 里发过的消息和你写过的文章学出你的写作习惯，存成本机的一份档案 | 一份 Markdown 档案 |
+
+去 AI 味有两份 skill：`/humanizer-zh` 管中文，`/humanizer` 管英文。侧栏的磁贴跟着界面语言走，中文界面显示「去 AI 味」，英文界面显示「De-AI editing」，都是四个磁贴。
 
 在输入框里打 `/` 就能看到它们。不用记命令也行：直接说「帮我把这篇文章排成网页」，模型会自己选 skill。
 
@@ -152,12 +155,13 @@ node <插件目录>/scripts/voice.mjs show
 
 ## 和独立 skill 仓库的关系
 
-四个 skill 都有自己的独立仓库，在 Claude Code、Codex 等其他 agent 里也能单独用：
+每个 skill 都有自己的独立仓库，在 Claude Code、Codex 等其他 agent 里也能单独用：
 
 - [guizang-ppt-skill](https://github.com/op7418/guizang-ppt-skill)
 - [guizang-social-card-skill](https://github.com/op7418/guizang-social-card-skill)
 - [guizang-pages-skill](https://github.com/op7418/guizang-pages-skill)
-- [Humanizer-zh](https://github.com/op7418/Humanizer-zh)
+- [Humanizer-zh](https://github.com/op7418/Humanizer-zh)（中文）
+- [humanizer](https://github.com/blader/humanizer)（英文）
 
 插件里的 `skills/` 是这些仓库在固定提交上的快照，版本记在 [`skills/manifest.json`](skills/manifest.json)，插件页面左下角也会显示。加载时插件会做两处调整：去掉只适用于 git clone 安装的步骤（PPT skill 开头的「检查更新」，插件里的 skill 随插件版本更新）；在末尾补几条插件环境下的说明（依赖已装好、交付后登记作品、写文案前读语气档案）。
 
@@ -198,4 +202,4 @@ dsh plugin --profile web add link:$PWD   # 本地调试
 
 ## License
 
-[AGPL-3.0](LICENSE)。打包的 skill 各自保留自己的 LICENSE（humanizer-zh 是 MIT）。
+[AGPL-3.0](LICENSE)。打包的 skill 各自保留自己的 LICENSE（humanizer-zh 和 humanizer 是 MIT）。

@@ -25,6 +25,7 @@ const META = {
   'guizang-social-card-skill': { key: 'skill.card', theme: 'safety-orange', dot: '#FF6B35' },
   'guizang-page-skill': { key: 'skill.page', theme: 'lemon-green', dot: '#C5E803' },
   'humanizer-zh': { key: 'skill.humanizer', theme: 'lemon', dot: '#FFD500' },
+  humanizer: { key: 'skill.humanizer', theme: 'lemon', dot: '#FFD500' },
   'guizang-voice': { key: 'skill.voice', theme: 'ikb', dot: '#737373' },
 }
 const meta = (n) => (META[n] ? { ...META[n], short: t(META[n].key) } : { short: n || t('skill.other'), dot: '#a3a3a3' })
