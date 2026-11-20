@@ -350,7 +350,15 @@ document.addEventListener('input', (e) => { if (e.target.id === 'q') { state.q =
 addEventListener('hashchange', () => { render(); scrollTo(0, 0) })
 
 async function load() {
-  data = await fetch(`api/catalog?lang=${i18n.lang}`, { cache: 'no-store' }).then((r) => r.json())
+  const catalog = await fetch(`api/catalog?lang=${i18n.lang}`, { cache: 'no-store' }).then((r) => r.json())
+  // 目录 API 的链接从插件根开始，画廊按自己的地址解析，保留 DSH 的挂载前缀。
+  const local = (path) => path?.replace(/^\/guizang-design\//, './') ?? path
+  for (const work of [...catalog.examples, ...catalog.works]) {
+    work.url = local(work.url)
+    work.thumb = local(work.thumb)
+    work.files = work.files?.map(local)
+  }
+  data = catalog
   render()
 }
 load()
